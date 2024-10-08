@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "495209671454",
+    "project_id": "arpalace-6f634",
+    "storage_bucket": "arpalace-6f634.appspot.com",
+    "firebase_url": "https://arpalace-6f634-default-rtdb.firebaseio.com/"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:495209671454:android:3fdd7163bc0c8c34cdb70f",
+        "android_client_info": {
+          "package_name": "com.kparpalace.arpalace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYR8iTPCljqNtrvFmZg0UaOCnPn98Uxbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
