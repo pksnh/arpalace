@@ -6,11 +6,11 @@ using TMPro;
 using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
+using UnityEditor;
 
 public class DataBase : MonoBehaviour
 {
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI buildingText;
 
 
     public class Palace
@@ -39,15 +39,15 @@ public class DataBase : MonoBehaviour
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference; // 데이터베이스 정보가 있는 줄의 바로 아래 줄 참조(정보가 하나도 없으면 맨 위 참조)
 
-        writeNewBuilding("00", "돈화문", "창덕궁 정문", "1609년(광해군 1년)에 재건한 후 지금까지 보전");
-        writeNewBuilding("01", "인정전", "창덕궁 정전", "1609년(광해군 1년)에 재건, 1777년(정조 1년)에 관료 질서 재정비 위해 품계석 설치");
-        writeNewBuilding("02", "희정당", "창덕궁 편전", "의례 장소로 주로 사용되는 선정전을 대신해 편전으로 기능, 1917년 화재로 소실된 후 1920년에 경복궁 강년전을 옮겨와 증축,  건물 남면에 자동차 진입 위한 지붕 존재, 내부는 서양식으로 장식");
-        writeNewBuilding("03", "대조전", "창덕궁 내전", "1917년 화재로 소실 후 1920년에 경복궁 교태전 옮겨와 재건, 내부를 서양식으로 장식");
-        writeNewBuilding("04", "낙선재", "창덕궁 침전", "1847년(현종 13년)에 건립, 궁궐침전형식을 활용한 사대부 주택 형식 지님, 대한제국 황실 일가가 삶의 마지막을 보낸 장소");
-        writeNewBuilding("05", "규장각", "서고 및 학술, 정책 연구 기관", "1781년(정조 5년) 왕실 서고 역할 맡은 규장각을 학문 및 정책 연구 기관으로 확장, 강화도에 어제 및 어필, 어람용 의궤 보관 위한 외규장각 배치");
-        writeNewBuilding("06", "부용지", "", "");
-        writeNewBuilding("07", "연경당", "", "");
-        writeNewBuilding("08", "선정전", "창덕궁 편전", "청기화 건물 중 유일하게 현존하는 건물");
+        writeNewBuilding("palace_00", "돈화문", "창덕궁 정문", "1609년(광해군 1년)에 재건한 후 지금까지 보전");
+        writeNewBuilding("palace_01", "인정전", "창덕궁 정전", "1609년(광해군 1년)에 재건, 1777년(정조 1년)에 관료 질서 재정비 위해 품계석 설치");
+        writeNewBuilding("palace_02", "희정당", "창덕궁 편전", "의례 장소로 주로 사용되는 선정전을 대신해 편전으로 기능, 1917년 화재로 소실된 후 1920년에 경복궁 강년전을 옮겨와 증축,  건물 남면에 자동차 진입 위한 지붕 존재, 내부는 서양식으로 장식");
+        writeNewBuilding("palace_03", "대조전", "창덕궁 내전", "1917년 화재로 소실 후 1920년에 경복궁 교태전 옮겨와 재건, 내부를 서양식으로 장식");
+        writeNewBuilding("palace_04", "낙선재", "주거용 건물", "1847년(현종 13년)에 건립되어 동궐도에는 존재하지 않음, 궁궐 침전 형식을 활용한 사대부 주택 형식, 대한제국 황실 일가가 삶의 마지막을 보낸 장소");
+        writeNewBuilding("palace_05", "주합루(2층, 1층: 규장각)", "서고 및 학술, 정책 연구 기관", "1781년(정조 5년) 왕실 서고 역할 맡은 규장각을 학문 및 정책 연구 기관으로 확장, 강화도에 어제 및 어필과 어람용 의궤 보관 위한 외규장각 배치");
+        writeNewBuilding("palace_06", "부용지", "부용정의 연못", "호수 가운데에 작은 섬 존재, 정조가 이 연못에서 신하들과 함께 행사 참여 및 낚시");
+        writeNewBuilding("palace_07", "연경당", "주거용 건물", "효명세자가 순조와 순원왕후를 위한 잔치를 위해 지음, 동궐도 묘사와 현재 건물 모습에 차이 큼");
+        writeNewBuilding("palace_08", "선정전", "창덕궁 편전", "청기화 건물 중 유일하게 현존하는 건물");
     }
 
     // Update is called once per frame
@@ -64,7 +64,43 @@ public class DataBase : MonoBehaviour
         reference.Child("buildings").Child(buildingIndex).SetRawJsonValueAsync(str);
     }
 
+
+    /*
     public void CreateBulidingPosition(Vector2 gpsPos, Transform image)
+    {
+        FirebaseDatabase.DefaultInstance.GetReference("Stores").GetValueAsync().ContinueWithOnMainThread(task =>  // ContinueWithOnmainThread: 데이터베이스에서 정보 계속 불러옴
+        {
+            // 비동기화: Async->각자가 서로에게 영향 안 미치고 각자 작동함 
+            if (task.IsFaulted) // 정보 받아오기 실패함
+            {
+
+
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result; // DataSnapshot: 데이터를 가져왔을 때 그 찰나에 받아왔던 값
+                foreach (DataSnapshot data in snapshot.Children) // 스냅샷.children: 정보 2개 있음, 정보들을 DataSnapShot 타입 data로 정보 개수만큼 반복해서 정보 보냄
+                {
+                    string value = data.GetRawJsonValue(); // DegualtInstance->SnapShot->Foreach 반복->GetRawjsonValue로 개별 정보 전달
+                    Palace palace = JsonUtility.FromJson<Palace>(value); // string 타입으로 Json문법으로 작성된 value를 Store 타입으로 변경, JsonUtility: 유니티에서 Json타입 정보 다룰 수 있게 함, Json: 네트워크로 정보 주고받을 시 string 타입으로 다룸
+
+                    
+                    //bVector2 dbPos = new Vector2(palace.act, palace.information);
+                    //float d = Vector2.Distance(dbPos, gpsPos); // dPos와 gpsPos 거리 계산
+                    //if (d < 0.0005f)
+                    //{
+                    //    GameObject prefab = Resources.Load(palace.name) as GameObject;
+                    //    Instantiate(prefab, image.position, image.rotation); // Resource: 특별한 폴터, .Load 호출 시에만 파일 로드, 일반적으로는 호출x
+                    //}
+                    
+                }
+            }
+        }
+        );
+    }
+    */
+
+    public void SendDbToText()
     {
         FirebaseDatabase.DefaultInstance.GetReference("Stores").GetValueAsync().ContinueWithOnMainThread(task =>  // ContinueWithOnmainThread: 데이터베이스에서 정보 계속 불러옴
         {
@@ -81,19 +117,21 @@ public class DataBase : MonoBehaviour
                     string value = data.GetRawJsonValue(); // DegualtInstance->SnapShot->Foreach 반복->GetRawjsonValue로 개별 정보 전달
                     Palace palace = JsonUtility.FromJson<Palace>(value); // string 타입으로 Json문법으로 작성된 value를 Store 타입으로 변경, JsonUtility: 유니티에서 Json타입 정보 다룰 수 있게 함, Json: 네트워크로 정보 주고받을 시 string 타입으로 다룸
 
-                    /*
-                    bVector2 dbPos = new Vector2(palace.act, palace.information);
-                    float d = Vector2.Distance(dbPos, gpsPos); // dPos와 gpsPos 거리 계산
-                    if (d < 0.0005f)
-                    {
-                        GameObject prefab = Resources.Load(palace.name) as GameObject;
-                        Instantiate(prefab, image.position, image.rotation); // Resource: 특별한 폴터, .Load 호출 시에만 파일 로드, 일반적으로는 호출x
-                    }
-                    */
+                    buildingText.text = "이름: " + palace.name + '\n' + "기능: " + palace.act + '\n' + "정보: " + palace.information;
+
+                    //bVector2 dbPos = new Vector2(palace.act, palace.information);
+                    //float d = Vector2.Distance(dbPos, gpsPos); // dPos와 gpsPos 거리 계산
+                    //if (d < 0.0005f)
+                    //{
+                    //    GameObject prefab = Resources.Load(palace.name) as GameObject;
+                    //    Instantiate(prefab, image.position, image.rotation); // Resource: 특별한 폴터, .Load 호출 시에만 파일 로드, 일반적으로는 호출x
+                    //}
                 }
             }
-        }
-        );
+        });
+
     }
 
 }
+
+
