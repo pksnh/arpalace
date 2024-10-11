@@ -11,16 +11,22 @@ public class ImageTrack : MonoBehaviour
     public List<GameObject> list1 = new List<GameObject>();
     //public List<AudioClip> list2 = new List<AudioClip>();
 
+    private DataBase db;
+
     private Dictionary<string, GameObject> dict1 = new Dictionary<string, GameObject>();
     //private Dictionary<string, AudioClip> dict2 = new Dictionary<string, AudioClip>();
 
     // Start is called before the first frame update
     void Start()
     {
+        db = GetComponent<DataBase>();
+
         foreach (GameObject o in list1)
         {
             dict1.Add(o.name, o);
+
         }
+
 
         /*foreach (AudioClip o in list2)
         {
@@ -85,6 +91,6 @@ public class ImageTrack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 }

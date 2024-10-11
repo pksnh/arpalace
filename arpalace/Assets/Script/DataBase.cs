@@ -7,11 +7,16 @@ using Firebase;
 using Firebase.Database;
 using Firebase.Extensions;
 using UnityEditor;
+using static DataBase;
 
 public class DataBase : MonoBehaviour
 {
-    public TextMeshProUGUI buildingText;
+    public TextMeshProUGUI[] buildingText;
+    public TextMeshProUGUI buildingNameText;
+    public TextMeshProUGUI buildingActText;
+    public TextMeshProUGUI buildingInformationText;
 
+    int i = 0;
 
     public class Palace
     {
@@ -34,8 +39,7 @@ public class DataBase : MonoBehaviour
 
     DatabaseReference reference;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         reference = FirebaseDatabase.DefaultInstance.RootReference; // 데이터베이스 정보가 있는 줄의 바로 아래 줄 참조(정보가 하나도 없으면 맨 위 참조)
 
@@ -47,7 +51,14 @@ public class DataBase : MonoBehaviour
         writeNewBuilding("palace_05", "주합루(2층, 1층: 규장각)", "서고 및 학술, 정책 연구 기관", "1781년(정조 5년) 왕실 서고 역할 맡은 규장각을 학문 및 정책 연구 기관으로 확장, 강화도에 어제 및 어필과 어람용 의궤 보관 위한 외규장각 배치");
         writeNewBuilding("palace_06", "부용지", "부용정의 연못", "호수 가운데에 작은 섬 존재, 정조가 이 연못에서 신하들과 함께 행사 참여 및 낚시");
         writeNewBuilding("palace_07", "연경당", "주거용 건물", "효명세자가 순조와 순원왕후를 위한 잔치를 위해 지음, 동궐도 묘사와 현재 건물 모습에 차이 큼");
-        writeNewBuilding("palace_08", "선정전", "창덕궁 편전", "청기화 건물 중 유일하게 현존하는 건물");
+        writeNewBuilding("palace_08", "선정전", "창덕궁 편전", "현재 유일하게 보존된 청기와 건물");
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        SendDbToText();
+
     }
 
     // Update is called once per frame
@@ -102,7 +113,7 @@ public class DataBase : MonoBehaviour
 
     public void SendDbToText()
     {
-        FirebaseDatabase.DefaultInstance.GetReference("Stores").GetValueAsync().ContinueWithOnMainThread(task =>  // ContinueWithOnmainThread: 데이터베이스에서 정보 계속 불러옴
+        FirebaseDatabase.DefaultInstance.GetReference("buildings").GetValueAsync().ContinueWithOnMainThread(task =>  // ContinueWithOnmainThread: 데이터베이스에서 정보 계속 불러옴
         {
             // 비동기화: Async->각자가 서로에게 영향 안 미치고 각자 작동함 
             if (task.IsFaulted) // 정보 받아오기 실패함
@@ -114,24 +125,13 @@ public class DataBase : MonoBehaviour
                 DataSnapshot snapshot = task.Result; // DataSnapshot: 데이터를 가져왔을 때 그 찰나에 받아왔던 값
                 foreach (DataSnapshot data in snapshot.Children) // 스냅샷.children: 정보 2개 있음, 정보들을 DataSnapShot 타입 data로 정보 개수만큼 반복해서 정보 보냄
                 {
-                    string value = data.GetRawJsonValue(); // DegualtInstance->SnapShot->Foreach 반복->GetRawjsonValue로 개별 정보 전달
-                    Palace palace = JsonUtility.FromJson<Palace>(value); // string 타입으로 Json문법으로 작성된 value를 Store 타입으로 변경, JsonUtility: 유니티에서 Json타입 정보 다룰 수 있게 함, Json: 네트워크로 정보 주고받을 시 string 타입으로 다룸
+                    string value = data.GetRawJsonValue();
+                    Palace palace = JsonUtility.FromJson<Palace>(value);
 
-                    buildingText.text = "이름: " + palace.name + '\n' + "기능: " + palace.act + '\n' + "정보: " + palace.information;
-
-                    //bVector2 dbPos = new Vector2(palace.act, palace.information);
-                    //float d = Vector2.Distance(dbPos, gpsPos); // dPos와 gpsPos 거리 계산
-                    //if (d < 0.0005f)
-                    //{
-                    //    GameObject prefab = Resources.Load(palace.name) as GameObject;
-                    //    Instantiate(prefab, image.position, image.rotation); // Resource: 특별한 폴터, .Load 호출 시에만 파일 로드, 일반적으로는 호출x
-                    //}
+                    buildingText[i].text = "이름: " + palace.name + "\n\n기능: " + palace.act + "\n\n정보: " + palace.information;
+                    i++;
                 }
             }
         });
-
     }
-
 }
-
-
