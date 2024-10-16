@@ -189,8 +189,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291480266
-  m_fontColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -666,8 +666,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4291480266
-  m_fontColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1764,18 +1764,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1500164517}
     m_Modifications:
-    - target: {fileID: 2236867229559205427, guid: 7509e08d3cde0914aaea6d07f7403567, type: 3}
-      propertyPath: m_Color.b
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2236867229559205427, guid: 7509e08d3cde0914aaea6d07f7403567, type: 3}
-      propertyPath: m_Color.g
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2236867229559205427, guid: 7509e08d3cde0914aaea6d07f7403567, type: 3}
-      propertyPath: m_Color.r
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2971298585955937541, guid: 7509e08d3cde0914aaea6d07f7403567, type: 3}
       propertyPath: m_Name
       value: palace_08
@@ -2183,10 +2171,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 483691244399341307, guid: c5d55e9ef63377b4080024e9ca948973, type: 3}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1463279126074406219, guid: c5d55e9ef63377b4080024e9ca948973, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2226,10 +2210,6 @@ PrefabInstance:
     - target: {fileID: 1463279126074406219, guid: c5d55e9ef63377b4080024e9ca948973, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6056174768165741670, guid: c5d55e9ef63377b4080024e9ca948973, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0.3423
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
