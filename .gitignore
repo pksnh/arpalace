@@ -82,6 +82,7 @@ google-services-desktop.json
 google-services-desktop.json.meta
 google-services.xml
 **/Firebase/*
+Firebase.meta
 
 # Crashlytics generated file
 crashlytics-build.properties
