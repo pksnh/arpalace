@@ -83,6 +83,7 @@ google-services-desktop.json.meta
 google-services.xml
 **/Firebase/*
 Firebase.meta
+**/FirebaseApp.androidlib/*
 
 # Crashlytics generated file
 crashlytics-build.properties
